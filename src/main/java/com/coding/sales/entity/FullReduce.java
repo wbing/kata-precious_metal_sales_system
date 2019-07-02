@@ -32,9 +32,13 @@ public class FullReduce {
         if(isCount){
             this.fullCount=full;
             this.reduceCount=reduce;
+            this.full=BigDecimal.ZERO;
+            this.reduce=BigDecimal.ZERO;
         }else {
             this.full = full;
             this.reduce = reduce;
+            this.fullCount=BigDecimal.ZERO;
+            this.reduceCount=BigDecimal.ZERO;
         }
         this.isCount=isCount;
     }

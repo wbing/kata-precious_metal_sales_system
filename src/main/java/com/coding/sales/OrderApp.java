@@ -7,6 +7,8 @@ import com.coding.sales.output.OrderRepresentation;
 import com.coding.sales.service.InitData;
 import com.coding.sales.service.OrderCalculator;
 
+import java.text.ParseException;
+
 /**
  * 销售系统的主入口
  * 用于打印销售凭证
@@ -47,7 +49,9 @@ public class OrderApp {
 		} catch (ValidationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         return result;
     }
