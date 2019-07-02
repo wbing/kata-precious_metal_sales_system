@@ -6,12 +6,14 @@ import com.coding.sales.entity.PointsChange;
 
 import java.math.BigDecimal;
 import java.util.Map;
+
+import javax.xml.bind.ValidationException;
 /*
  * 会员积分及等级更新计算测试类
  */
 public class PointsCalculatorTest {
     @Test
-    public void should_parse_command() {
+    public void should_parse_command() throws ValidationException {
     	//初始化用户数据
     	InitData.init();
     	PointsCalculator pointsCalculator = new PointsCalculator();

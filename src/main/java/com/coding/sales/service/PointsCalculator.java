@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.ValidationException;
+
 import com.coding.sales.constant.MemberGrade;
 import com.coding.sales.entity.Member;
 import com.coding.sales.entity.PointsChange;
@@ -14,7 +16,7 @@ import com.coding.sales.entity.PointsChange;
 public class PointsCalculator {
 	public boolean isGo = true;
 	
-	public PointsChange memberPAGCla(String memberId, BigDecimal receivables){
+	public PointsChange memberPAGCla(String memberId, BigDecimal receivables)  throws ValidationException{
 		
 		PointsChange pointChange = new PointsChange();
 		//会员等级及积分信息
@@ -74,7 +76,7 @@ public class PointsCalculator {
 	 * 		Map gradeMap-会员等级变化
 	 * 
 	 */
-	private Map gradeCla(String memberId){
+	private Map gradeCla(String memberId) throws ValidationException{
 		Map gradeMap = new HashMap();
 		//会员等级变化标志
 		boolean gradeChangeFlag = false;
@@ -91,19 +93,20 @@ public class PointsCalculator {
 		Map gradeChangeMap = new HashMap();
 		if(memberPoints.compareTo(maxPoints) > 0){
 			gradeChangeFlag = true;
-			gradeChangeMap = gradeChange(memberPoints,maxPoints,memberGrade.getGrade(),memberGrade.getGradeType());
+			try {
+				gradeChangeMap = gradeChange(memberPoints,maxPoints,memberGrade.getGrade(),memberGrade.getGradeType(),member);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 		}
 		//更新会员等级至用户对象
-		memberGrade.setGrade(gradeChangeMap.get("NewGrade").toString());
-		memberGrade.setGradeType((int) gradeChangeMap.get("NewGradeType"));
-		member.setMemberGrade(memberGrade);
+//		memberGrade.setGrade(gradeChangeMap.get("NewGrade").toString());
+//		memberGrade.setGradeType((int) gradeChangeMap.get("NewGradeType"));
+//		member.setMemberGrade(memberGrade);
 		String newGrade = oldMemberType;
 		
 		gradeMap.put("OldMemberType", oldMemberType);//原会员等级
-		if(gradeChangeFlag){
-			newGrade = gradeChangeMap.get("NewGrade").toString();
-		}
-		gradeMap.put("NewMemberType", newGrade);//新会员等级
+		gradeMap.put("NewMemberType", memberGrade.getGrade());//新会员等级
 		gradeMap.put("GradeChangeFlag", gradeChangeFlag);//会员等级变化标志
 		
 		return gradeMap;
@@ -119,7 +122,7 @@ public class PointsCalculator {
 	 * 		String NewMemberType-新会员等级
 	 * 
 	 */
-	private Map gradeChange(BigDecimal memberPoints,BigDecimal maxPoints,String grade,int gradeType){
+	private Map gradeChange(BigDecimal memberPoints,BigDecimal maxPoints,String grade,int gradeType,Member member) throws ValidationException{
 		
 		Map gradeChangeMap = new HashMap();
 		String gradename = grade;
@@ -129,11 +132,15 @@ public class PointsCalculator {
 			maxPoints = memberGrade.getMaxPoints();//下一等级最大积分
 			grade = memberGrade.getGrade();//下一等级会员等级名称
 			gradeType = memberGrade.getGradeType();//下一等级会员类型
-			gradeChange(memberPoints,maxPoints,grade,gradeType);
+			gradeChange(memberPoints,maxPoints,grade,gradeType,member);
 
+		}else{
+			MemberGrade memberGrade = member.getMemberGrade();
+			memberGrade.setGrade(grade);
+			memberGrade.setGradeType(gradeType);
+			member.setMemberGrade(memberGrade);
+			throw new ValidationException("更新对像，强制跳出递归");
 		}
-		gradeChangeMap.put("NewGrade", grade);
-		gradeChangeMap.put("NewGradeType", gradeType);
 		
 		return gradeChangeMap;
 	}
