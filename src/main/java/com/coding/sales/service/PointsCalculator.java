@@ -15,14 +15,22 @@ public class PointsCalculator {
 	public Map memberPAGCla(String memberId, BigDecimal receivables){
 		
 		//会员等级及积分信息
-		Map memberTypeInfo = new HashMap();
+		Map memberInfoMap = new HashMap();
 		//会员积分计算
 		Map pointsMap = pointCla(memberId,receivables);
-		BigDecimal memberPointsIncreased = (BigDecimal) pointsMap.get("MemberPointsIncreased");
+		
 		//会员等级计算
 		Map gradeMap = gradeCla(memberId);
 		
-		return memberTypeInfo;
+		memberInfoMap.put("MemberNo", memberId);//会员ID
+		memberInfoMap.put("OldMemberType", gradeMap.get("OldMemberType"));//原会员等级
+		memberInfoMap.put("NewMemberType", gradeMap.get("NewMemberType"));//新会员等级
+		memberInfoMap.put("MemberPointsIncreased", pointsMap.get("MemberPointsIncreased"));//本次消费会员新增的积分
+		memberInfoMap.put("MemberPoints", pointsMap.get("memberPoints"));//会员最新的积分
+		memberInfoMap.put("GradeChangeFlag", gradeMap.get("GradeChangeFlag"));//会员等级变化标志
+		
+		
+		return memberInfoMap;
 	}
 	/*
 	 * 会员积分计算
@@ -72,17 +80,19 @@ public class PointsCalculator {
 		BigDecimal maxPoints = memberGrade.getMaxPoints();
 		
 		//新会员等级
-		String newMemberType = oldMemberType;
+		Map gradeChangeMap = new HashMap();
 		if(memberPoints.compareTo(maxPoints) > 0){
 			gradeChangeFlag = true;
-			newMemberType = gradeChange(memberPoints,maxPoints,memberGrade.getGrade(),memberGrade.getGradeType());
-			
+			gradeChangeMap = gradeChange(memberPoints,maxPoints,memberGrade.getGrade(),memberGrade.getGradeType());
 		}
+		//更新会员等级至用户对象
+		memberGrade.setGrade(gradeChangeMap.get("NewGrade").toString());
+		memberGrade.setGradeType((int) gradeChangeMap.get("NewGradeType"));
+		member.setMemberGrade(memberGrade);
 		
-		
-		gradeMap.put("OldMemberType", oldMemberType);
-		gradeMap.put("NewMemberType", newMemberType);
-		gradeMap.put("GradeChangeFlag", gradeChangeFlag);
+		gradeMap.put("OldMemberType", oldMemberType);//原会员等级
+		gradeMap.put("NewMemberType", gradeChangeMap.get("NewGrade"));//新会员等级
+		gradeMap.put("GradeChangeFlag", gradeChangeFlag);//会员等级变化标志
 		
 		return gradeMap;
 		
@@ -97,11 +107,50 @@ public class PointsCalculator {
 	 * 		String NewMemberType-新会员等级
 	 * 
 	 */
-	private String gradeChange(BigDecimal memberPoints,BigDecimal maxPoints,String grade,int gradeType){
+	private Map gradeChange(BigDecimal memberPoints,BigDecimal maxPoints,String grade,int gradeType){
 
+		Map gradeChangeMap = new HashMap();
 		String gradename = grade;
+		if(memberPoints.compareTo(maxPoints) > 0){
+			gradeType = gradeType + 1;//下一等级会员类型
+			MemberGrade memberGrade = getEnum(gradeType);
+			maxPoints = memberGrade.getMaxPoints();//下一等级最大积分
+			grade = memberGrade.getGrade();//下一等级会员等级名称
+			gradeType = memberGrade.getGradeType();//下一等级会员类型
+			gradeChange(memberPoints,maxPoints,grade,gradeType);
+			
+		}
+		gradeChangeMap.put("NewGrade", grade);
+		gradeChangeMap.put("NewGradeType", gradeType);
+		return gradeChangeMap;
 		
-		return null;
+	}
+	
+	/*
+	 * 根据会员类型获取会员等级实例
+	 */
+	public MemberGrade getEnum(int gradeType){
+
+		MemberGrade memberGrade = MemberGrade.ONE;
+		switch(gradeType){
+			case 1:
+				memberGrade = MemberGrade.ONE;
+				break;
+			case 2:
+				memberGrade = MemberGrade.TWO;
+				break;
+			case 3:
+				memberGrade = MemberGrade.THREE;
+				break;
+			case 4:
+				memberGrade = MemberGrade.Four;
+				break;
+			default:
+				memberGrade = MemberGrade.Four;
+				break;
+		}
+		
+		return memberGrade;
 		
 	}
 	

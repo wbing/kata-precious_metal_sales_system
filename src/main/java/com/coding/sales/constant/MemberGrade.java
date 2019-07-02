@@ -69,28 +69,4 @@ public enum MemberGrade {
 		this.gradeType = gradeType;
 	}
 	
-	public MemberGrade getEnum(int gradeType){
-
-		MemberGrade memberGrade = MemberGrade.ONE;
-		switch(gradeType){
-			case 1:
-				memberGrade = MemberGrade.ONE;
-				break;
-			case 2:
-				memberGrade = MemberGrade.TWO;
-				break;
-			case 3:
-				memberGrade = MemberGrade.THREE;
-				break;
-			case 4:
-				memberGrade = MemberGrade.Four;
-				break;
-			default:
-				memberGrade = MemberGrade.Four;
-				break;
-		}
-		
-		return memberGrade;
-		
-	}
 }
