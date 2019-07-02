@@ -19,7 +19,10 @@ public class Member {
      * 会员积分
      */
     private BigDecimal memberPoints;
-
+    /**
+     * 会员等级号
+     */
+    private String memberTypeNo;
     public String getMemberId() {
         return memberId;
     }
@@ -51,4 +54,13 @@ public class Member {
     public void setMemberPoints(BigDecimal memberPoints) {
         this.memberPoints = memberPoints;
     }
+
+	public String getMemberTypeNo() {
+		return memberTypeNo;
+	}
+
+	public void setMemberTypeNo(String memberTypeNo) {
+		this.memberTypeNo = memberTypeNo;
+	}
+    
 }

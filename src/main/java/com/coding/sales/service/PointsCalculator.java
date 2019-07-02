@@ -14,7 +14,7 @@ public class PointsCalculator {
 		//会员等级及积分信息
 		Map memberTypeInfo = new HashMap();
 		//会员积分计算
-		
+		Map pointsMap = pointCla(memberId,receivables);
 		//会员等级计算
 
 		
@@ -30,7 +30,8 @@ public class PointsCalculator {
 	 */
 	private Map pointCla(String memberId, BigDecimal receivables){
 		
-		Map pointClaMap = new HashMap<>();
+		Map pointClaMap = new HashMap();
+		
 		
 		return pointClaMap;
 		
