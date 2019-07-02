@@ -1,5 +1,7 @@
 package com.coding.sales.entity;
 
+import com.coding.sales.constant.DiscountType;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -25,11 +27,31 @@ public class Product {
      * 折扣类型
      */
 
-    private String discount;
+    private DiscountType discount;
     /**
      * 满减
      */
-    private List fullReduce;
+    private List<FullReduce> fullReduce;
+
+    /**
+     * @param productNo
+     * @param productName
+     * @param price
+     * @param unit
+     * @param discount
+     * @param fullReduce
+     */
+    public Product(String productNo, String productName, BigDecimal price, String unit, DiscountType discount, List<FullReduce> fullReduce) {
+        this.productNo = productNo;
+        this.productName = productName;
+        this.price = price;
+        this.unit = unit;
+        this.discount = discount;
+        this.fullReduce = fullReduce;
+    }
+
+    public Product() {
+    }
 
     public String getProductNo() {
         return productNo;
@@ -63,19 +85,19 @@ public class Product {
         this.unit = unit;
     }
 
-    public String getDiscount() {
+    public DiscountType getDiscount() {
         return discount;
     }
 
-    public void setDiscount(String discount) {
+    public void setDiscount(DiscountType discount) {
         this.discount = discount;
     }
 
-    public List getFullReduce() {
+    public List<FullReduce> getFullReduce() {
         return fullReduce;
     }
 
-    public void setFullReduce(List fullReduce) {
+    public void setFullReduce(List<FullReduce> fullReduce) {
         this.fullReduce = fullReduce;
     }
 }

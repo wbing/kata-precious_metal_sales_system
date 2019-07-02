@@ -1,5 +1,7 @@
 package com.coding.sales.entity;
 
+import com.coding.sales.constant.MemberGrade;
+
 import java.math.BigDecimal;
 
 public class Member {
@@ -14,15 +16,11 @@ public class Member {
     /**
      * 会员等级
      */
-    private String memberType;
+    private MemberGrade memberGrade;
     /**
      * 会员积分
      */
     private BigDecimal memberPoints;
-    /**
-     * 会员等级号
-     */
-    private String memberTypeNo;
     public String getMemberId() {
         return memberId;
     }
@@ -38,15 +36,6 @@ public class Member {
     public void setMemberName(String memberName) {
         this.memberName = memberName;
     }
-
-    public String getMemberType() {
-        return memberType;
-    }
-
-    public void setMemberType(String memberType) {
-        this.memberType = memberType;
-    }
-
     public BigDecimal getMemberPoints() {
         return memberPoints;
     }
@@ -55,12 +44,21 @@ public class Member {
         this.memberPoints = memberPoints;
     }
 
-	public String getMemberTypeNo() {
-		return memberTypeNo;
-	}
+    public MemberGrade getMemberGrade() {
+        return memberGrade;
+    }
 
-	public void setMemberTypeNo(String memberTypeNo) {
-		this.memberTypeNo = memberTypeNo;
-	}
-    
+    public void setMemberGrade(MemberGrade memberGrade) {
+        this.memberGrade = memberGrade;
+    }
+
+    public Member() {
+    }
+
+    public Member(String memberId, String memberName, MemberGrade memberGrade, BigDecimal memberPoints) {
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.memberGrade = memberGrade;
+        this.memberPoints = memberPoints;
+    }
 }
