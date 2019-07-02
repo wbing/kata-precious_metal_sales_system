@@ -21,7 +21,7 @@ public class InitData {
         FullReduce threeThou=new FullReduce(new BigDecimal(3000),new BigDecimal(350),false);
         FullReduce twoThou=new FullReduce(new BigDecimal(2000),new BigDecimal(30),false);
         FullReduce oneThou=new FullReduce(new BigDecimal(1000),new BigDecimal(10),false);
-        FullReduce oneFree=new FullReduce(new BigDecimal(3),new BigDecimal(1),true);
+        FullReduce oneFree=new FullReduce(new BigDecimal(4),new BigDecimal(1),true);
         FullReduce halfFree=new FullReduce(new BigDecimal(3),new BigDecimal(0.5),true);
         List list1=new ArrayList();
         list1.add(threeThou);

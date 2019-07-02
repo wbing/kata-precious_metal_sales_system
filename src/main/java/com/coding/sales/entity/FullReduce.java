@@ -29,11 +29,37 @@ public class FullReduce {
     }
 
     public FullReduce(BigDecimal full, BigDecimal reduce,Boolean isCount) {
-        this.full = full;
-        this.reduce = reduce;
+        if(isCount){
+            this.fullCount=full;
+            this.reduceCount=reduce;
+        }else {
+            this.full = full;
+            this.reduce = reduce;
+        }
         this.isCount=isCount;
     }
 
+    public BigDecimal getFullCount() {
+        return fullCount;
+    }
 
+    public void setFullCount(BigDecimal fullCount) {
+        this.fullCount = fullCount;
+    }
 
+    public BigDecimal getReduceCount() {
+        return reduceCount;
+    }
+
+    public void setReduceCount(BigDecimal reduceCount) {
+        this.reduceCount = reduceCount;
+    }
+
+    public Boolean getIsCount() {
+        return isCount;
+    }
+
+    public void setIsCount(Boolean count) {
+        isCount = count;
+    }
 }

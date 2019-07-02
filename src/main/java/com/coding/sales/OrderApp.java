@@ -2,6 +2,8 @@ package com.coding.sales;
 
 import com.coding.sales.input.OrderCommand;
 import com.coding.sales.output.OrderRepresentation;
+import com.coding.sales.service.InitData;
+import com.coding.sales.service.OrderCalculator;
 
 /**
  * 销售系统的主入口
@@ -33,7 +35,12 @@ public class OrderApp {
     OrderRepresentation checkout(OrderCommand command) {
         OrderRepresentation result = null;
 
-        //TODO: 请完成需求指定的功能 环境联通测试 20190702
+        //TODO: 请完成需求指定的功能
+        //初始化商品数据和用户数据
+        InitData.init();
+        //计算订单
+        OrderCalculator calculator = new OrderCalculator();
+        result=calculator.calculate(command);
 
         return result;
     }
