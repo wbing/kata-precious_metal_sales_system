@@ -89,9 +89,13 @@ public class PointsCalculator {
 		memberGrade.setGrade(gradeChangeMap.get("NewGrade").toString());
 		memberGrade.setGradeType((int) gradeChangeMap.get("NewGradeType"));
 		member.setMemberGrade(memberGrade);
+		String newGrade = oldMemberType;
 		
 		gradeMap.put("OldMemberType", oldMemberType);//原会员等级
-		gradeMap.put("NewMemberType", gradeChangeMap.get("NewGrade"));//新会员等级
+		if(gradeChangeFlag){
+			newGrade = gradeChangeMap.get("NewGrade").toString();
+		}
+		gradeMap.put("NewMemberType", newGrade);//新会员等级
 		gradeMap.put("GradeChangeFlag", gradeChangeFlag);//会员等级变化标志
 		
 		return gradeMap;
