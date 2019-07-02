@@ -33,7 +33,7 @@ public class OrderApp {
     OrderRepresentation checkout(OrderCommand command) {
         OrderRepresentation result = null;
 
-        //TODO: 请完成需求指定的功能
+        //TODO: 请完成需求指定的功能 环境联通测试 20190702
 
         return result;
     }
