@@ -1,5 +1,7 @@
 package com.coding.sales;
 
+import javax.xml.bind.ValidationException;
+
 import com.coding.sales.input.OrderCommand;
 import com.coding.sales.output.OrderRepresentation;
 import com.coding.sales.service.InitData;
@@ -40,7 +42,12 @@ public class OrderApp {
         InitData.init();
         //计算订单
         OrderCalculator calculator = new OrderCalculator();
-        result=calculator.calculate(command);
+        try {
+			result=calculator.calculate(command);
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         return result;
     }

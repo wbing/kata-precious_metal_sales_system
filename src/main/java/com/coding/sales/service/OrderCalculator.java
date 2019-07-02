@@ -15,9 +15,11 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import javax.xml.bind.ValidationException;
+
 public class OrderCalculator {
 
-    public OrderRepresentation calculate(OrderCommand orderCommand){
+    public OrderRepresentation calculate(OrderCommand orderCommand) throws ValidationException{
         List<OrderItemRepresentation> orderItems=new ArrayList<>();
         List<DiscountItemRepresentation> discountItems=new ArrayList<>();
         BigDecimal finalAmount=BigDecimal.ZERO;
